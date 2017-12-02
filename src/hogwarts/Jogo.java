@@ -52,7 +52,7 @@ public class Jogo {
         salaGrifinoria = new Sala("na salão comunal da grifinória");
         
         // initialise sala exits
-        if(item.arrayItens==null){
+       // if(item.arrayItens==null){
             fora.setExit("frente", hall);
 
             hall.setExit("atras", fora);
@@ -74,7 +74,7 @@ public class Jogo {
             cozinha.setExit("cima", escadaria);
 
             torre.setExit("oeste", escadaria);
-        } else if (item.arrayItens)
+       // } else if (item.arrayItens)
 
         currentSala = fora;  // Começa o jogo fora 
     }
