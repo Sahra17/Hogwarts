@@ -7,15 +7,8 @@ package hogwarts;
 
 /**
  *
- * @author sahra.flohr
+ * @author alexe
  */
-public class Hogwarts {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Jogo jogo = new Jogo();
-        jogo.play();
-    }
+public class Jogador {
+   
 }

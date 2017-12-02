@@ -15,6 +15,7 @@ public class Jogo {
     private Leitor parser;
     private Sala currentSala;
     private Stack<Sala> previousSalas;
+    private Item item;
         
     /**
      * Cria o jogo e inicializa o mapa interno.
@@ -31,40 +32,51 @@ public class Jogo {
      */
     private void createSalas()
     {
-        Sala outside, theatre, pub, lab, office, attic;
-        Item table, chair, tv;
+        Sala fora, hall, salao, escadaria, torre, cozinha, corredorProibido, salaProibida, salaGrifinoria;
+        Item capa, biscoito;
       
         // cria os itens
-        table = new Item("uma mesa", 50);
-        chair = new Item("uma cadeira", 20);
-        tv = new Item("uma TV", 15);
+        capa = new Item("Capa de invisibilidade", 50);
+        biscoito = new Item("Biscoito magico", 20);
+        
         
         // create the salas
-        outside = new Sala("fora da entrada principal da universidade");
-        theatre = new Sala("em um auditório");
-        pub = new Sala("na cantina do campus", table);
-        lab = new Sala("em um laboratório de informática", chair);
-        office = new Sala("na sala dos professores", tv);
-        attic = new Sala("no sótão do laboratório");
+        fora = new Sala("você está na entrada de Hogwarts!");
+        hall = new Sala("no hall de entrada");
+        salao = new Sala("no Grande Salão", capa);
+        escadaria = new Sala("na escadaria");
+        torre = new Sala("na torre de astronômia");
+        cozinha = new Sala("na cozinha", biscoito);
+        corredorProibido = new Sala("no corredor proibido");
+        salaProibida = new Sala("na sala proibida");
+        salaGrifinoria = new Sala("na salão comunal da grifinória");
         
         // initialise sala exits
-        outside.setExit("leste", theatre);
-        outside.setExit("sul", lab);
-        outside.setExit("oeste", pub);
-        
-        theatre.setExit("oeste", outside);
-        
-        pub.setExit("leste", outside);
-        
-        lab.setExit("norte", outside);
-        lab.setExit("leste", office);
-        lab.setExit("cima", attic);
-        
-        attic.setExit("baixo", lab);
-        
-        office.setExit("oeste", lab);
+        if(item.arrayItens==null){
+            fora.setExit("frente", hall);
 
-        currentSala = outside;  // Começa o jogo fora 
+            hall.setExit("atras", fora);
+            hall.setExit("frente", salao);
+            hall.setExit("direita", escadaria);
+
+            salao.setExit("sul", hall);
+
+            escadaria.setExit("esquerda", corredorProibido);
+            escadaria.setExit("cima", torre);
+            escadaria.setExit("direita", salaGrifinoria);
+            escadaria.setExit("baixo", cozinha);
+
+            salaGrifinoria.setExit("esquerda", escadaria);
+
+            corredorProibido.setExit("direita", escadaria);
+            corredorProibido.setExit("frente", salaProibida);
+
+            cozinha.setExit("cima", escadaria);
+
+            torre.setExit("oeste", escadaria);
+        } else if (item.arrayItens)
+
+        currentSala = fora;  // Começa o jogo fora 
     }
 
     /**
@@ -82,7 +94,11 @@ public class Jogo {
             Comando command = parser.getComando();
             finished = processCommand(command);
         }
-        System.out.println("Obrigado por jogar.  Adeus.");
+        System.out.println("AVADA KEDAVRA!");
+        /*SE ENTRAR NA SALA PROIBIDA, O JOGADOR MORRE
+        if (currentSala.equals(createSalas())){
+            System.out.println("Você foi atacado pelo cachorro e morreu!");
+        }*/
     }
 
     /**
@@ -91,8 +107,8 @@ public class Jogo {
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Bem-vindo ao Mundo de Zuul!");
-        System.out.println("Mundo de Zuul é um jogo de aventura, incrivelmente chato.");
+        System.out.println("Bem-vindo a Hogwarts!");
+        System.out.println("Aqui você vai ter a oportunidade de deixar de ser trouxa");
         System.out.println("Digite 'ajuda' se você precisar de ajuda.");
         System.out.println();
         
@@ -129,18 +145,30 @@ public class Jogo {
             goSala(command);
         else if (commandWord.equals("sair"))
             wantToQuit = quit(command);
-        else if (commandWord.equals("examinar"))
-            look();
         else if (commandWord.equals("comer"))
             eat();
+        else if (commandWord.equals("pegar"))
+            take();
+        else if (commandWord.equals("examinar"))
+            look();
         else if (commandWord.equals("voltar"))
             returnSala(command);
+        else if (commandWord.equals("largar"))
+            drop();
 
         return wantToQuit;
     }
     
     public void eat() {
-        System.out.println("Você comeu e agora não está mais com fome.");
+        System.out.println("Agora você pode carregar dois itens.");
+    }
+    //adicionar itens num array 
+    public void take(){
+       item.add("Capa de invisibilidade");
+    }
+    //retirar itens num array
+    public void drop(){
+    
     }
 
     // implementations of user commands:
@@ -152,8 +180,7 @@ public class Jogo {
      */
     private void printHelp() 
     {
-        System.out.println("Você está perdido. Você está só. Você caminha");
-        System.out.println("pela universidade.");
+        System.out.println("Você está perdido e não há o Mapa do Maroto");
         System.out.println();
         System.out.println("Seus comandos são:");
         System.out.println("   " + parser.getComandoList());

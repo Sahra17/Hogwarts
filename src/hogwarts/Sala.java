@@ -54,10 +54,7 @@ public class Sala {
     /**
      * @return The description of the sala.
      */
-    public String getDescription()
-    {
-        return description;
-    }
+    
     
     /**
      * Retorna uma das saídas da sala, a partir de uma String.

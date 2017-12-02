@@ -12,7 +12,7 @@ package hogwarts;
 public class Palavras {
     // um array constante que contém todos os comandos válidos
     private static final String[] VALID_COMMANDS = {
-        "ir_para", "sair", "ajuda", "examinar", "comer", "voltar"
+        "ir_para", "sair", "ajuda", "comer", "pegar", "largar", "voltar"
     };
 
     /**
