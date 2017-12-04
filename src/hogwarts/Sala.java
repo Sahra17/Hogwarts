@@ -39,6 +39,10 @@ public class Sala {
     public void setItem(Item item) {
         this.item = item;
     }
+    
+    public Item getItem(Item nomeDoItem){
+        return nomeDoItem;
+    }
 
     /**
      * Define the exits of this sala.  Every direction either leads

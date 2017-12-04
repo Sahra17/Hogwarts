@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package hogwarts;
-import java.util.ArrayList;
+
 /**
  *
  * @author sahra.flohr
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class Item {
     private String description;
     private int qntd;
-    ArrayList<String> arrayItens = new ArrayList<String>();
+    
    
     public Item(String description, int qntd) {
         this.description = description;
@@ -27,12 +27,7 @@ public class Item {
         return description + " que pesa " + qntd;
     }
     
-    public void add(String item){
-        arrayItens.add(item);
-        for (String s : arrayItens) {
-            System.out.println(s);
-        }
-    }
+ 
     
     
 }

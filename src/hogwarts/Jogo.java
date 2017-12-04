@@ -13,10 +13,10 @@ import java.util.Stack;
  */
 public class Jogo {
     private Leitor parser;
-    private Sala currentSala;
+    public Sala currentSala;
     private Stack<Sala> previousSalas;
-    private Item item;
-        
+    private Jogador jogador;
+    private Item item;    
     /**
      * Cria o jogo e inicializa o mapa interno.
      */
@@ -36,7 +36,7 @@ public class Jogo {
         Item capa, biscoito;
       
         // cria os itens
-        capa = new Item("Capa de invisibilidade", 50);
+       capa = new Item("Capa de invisibilidade", 50);
         biscoito = new Item("Biscoito magico", 20);
         
         
@@ -78,6 +78,7 @@ public class Jogo {
 
         currentSala = fora;  // Começa o jogo fora 
     }
+
 
     /**
      *  A rotina de jogo principal. Faz um loop até o fim do jogo.
@@ -139,22 +140,34 @@ public class Jogo {
         }
 
         String commandWord = command.getComandoWord();
-        if (commandWord.equals("ajuda"))
-            printHelp();
-        else if (commandWord.equals("ir_para"))
-            goSala(command);
-        else if (commandWord.equals("sair"))
-            wantToQuit = quit(command);
-        else if (commandWord.equals("comer"))
-            eat();
-        else if (commandWord.equals("pegar"))
-            take();
-        else if (commandWord.equals("examinar"))
-            look();
-        else if (commandWord.equals("voltar"))
-            returnSala(command);
-        else if (commandWord.equals("largar"))
-            drop();
+        switch (commandWord) {
+            case "ajuda":
+                printHelp();
+                break;
+            case "ir_para":
+                goSala(command);
+                break;
+            case "sair":
+                wantToQuit = quit(command);
+                break;
+            case "comer":
+                eat();
+                break;
+            case "pegar":
+                take(command);
+                break;
+            case "examinar":
+                look();
+                break;
+            case "voltar":
+                returnSala(command);
+                break;
+            case "largar":
+                drop();
+                break;
+            default:
+                break;
+        }
 
         return wantToQuit;
     }
@@ -163,8 +176,16 @@ public class Jogo {
         System.out.println("Agora você pode carregar dois itens.");
     }
     //adicionar itens num array 
-    public void take(){
-       item.add("Capa de invisibilidade");
+    public void take(Comando comando){
+        if (!comando.hasSecondWord()) {
+            System.out.println("Pegar o quê?");
+        } else {
+            try {
+                jogador.addItem(comando.getSecondWord());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());      
+            }
+        }
     }
     //retirar itens num array
     public void drop(){
